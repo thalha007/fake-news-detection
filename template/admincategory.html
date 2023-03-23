@@ -1,0 +1,68 @@
+{% extends 'adminbase.html' %} {% block content %}
+<style>
+	th,
+	td {
+		padding: 10px;
+	}
+
+	th {
+		background-color: black;
+		color: white;
+	}
+</style>
+<center>
+	<div style="margin: 50px">
+		<hr />
+		<h2 style="margin: 10px">Category</h2>
+		<hr />
+		<form method="POST">
+			{% csrf_token %}
+			<table>
+				<tr>
+					<td>Category</td>
+					<td>
+						<input
+							type="text"
+							class="form-control"
+							name="txtCategory"
+							required
+						/>
+					</td>
+				</tr>
+
+				<tr>
+					<td colspan="2">
+						<input
+							type="submit"
+							class="btn btn-primary"
+							style="color: white; width: 400px"
+							value="Submit"
+						/>
+					</td>
+				</tr>
+			</table>
+		</form>
+		{% if data %}
+		<hr />
+		<table>
+			<tr>
+				<th>ID</th>
+				<th>CATEGORY</th>
+				<th></th>
+			</tr>
+			{% for d in data %}
+			<tr>
+				<td>{{d.0}}</td>
+				<td>{{d.1}}</td>
+				<td><a href="/admindeletecategory?id={{d.0}}">Delete</a></td>
+			</tr>
+			{% endfor %}
+		</table>
+		{% endif %}
+	</div>
+</center>
+<script>
+	var msg = '{{msg}}';
+	if (msg != '') alert(msg);
+</script>
+{% endblock %}

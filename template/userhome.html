@@ -1,0 +1,66 @@
+{% extends 'userbase.html' %}
+{% block content %}
+<style>
+th,td{
+    padding: 10px;
+}
+th{
+    background-color: black;
+    color:white;
+}
+</style>
+<center>
+<div style="margin: 50px;">
+    <hr><h2 style="margin: 10px;">Welcome {{request.session.name}}</h2><hr>
+    <form method="POST">
+        {% csrf_token %}
+        <select class="form-control" name="cat">
+            {% for d in category %}
+            <option value="{{d.0}}">{{d.1}}</option>
+            {% endfor %}
+        </select>
+        <br>
+        <input type="date" name="txtDate" class="form-control">
+        <br>
+        <input type="submit" class="btn btn-primary" value="Search">
+        <br>
+        <br>
+    </form>
+    <div class="container-fluid">
+		<div class="content">
+			<div class="col-md-7 content-left">
+				<div class="article">
+					<h5 class="head">Latest news</h5>
+                    {% for d in latest %}
+					<a class="title" href="/usernewsdetail?id={{d.0}}">{{d.3}}</a>
+					<img src="../static{{d.5}}" alt="" />
+					<p>{{d.4|truncatewords:25}}</p>
+                    {% endfor %}
+				</div>
+			</div>
+			<div class="col-md-5 content-right" >
+			<div class="content-right-top">
+				<h5 class="head">Popular</h5>	
+                {% for d in popular %}
+				<a href="/usernewsdetail?id={{d.0}}">
+					<div class="editor text-center">
+						<h3>{{d.3}}</h3>
+						<p>{{d.4|truncatewords:25}}</p>
+						<label>{{d.6}}</label>
+						<span></span>
+					</div>
+				</a>
+				{% endfor %}
+			</div>
+			<div class="clearfix"></div>
+			<div class="clearfix"></div>			
+		</div>
+	</div>
+</div>
+</center>
+<script>
+    var msg="{{msg}}";
+    if(msg!="")
+        alert(msg)
+    </script>
+{% endblock %}
